@@ -1,10 +1,11 @@
-Ansible role: macdock
+Ansible role: mas
 =========
 
 [![MIT licensed][mit-badge]][mit-link]
 [![Galaxy Role][role-badge]][galaxy-link]
 
 Ansible role for installing the apps from MacOS App Store.
+
 This role is a fork of geerlingguy.mas role, which does not work for me for some reason.
 
 Requirements
