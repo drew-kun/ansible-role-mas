@@ -5,7 +5,6 @@ mas_email: ""
 
 mas_password: ""
 
-
 mas_installed_apps:
 - { id: 883878097, name: "Server" }
 - { id: 497799835, name: "Xcode" }
