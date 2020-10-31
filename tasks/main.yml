@@ -56,30 +56,30 @@
 # Configure AppStore Software update
 - name: '[mas] Determine if softwareupdate should install updates'
   set_fact:
-    macos_softwareupdate_action: "--install"
-  when: macos_softwareupdate.install
+    mas_macos_softwareupdate_action: "--install"
+  when: mas_softwareupdate.install
   tags: mas
 
 - name: '[mas] Determine if softwareupdate should only download updates'
   set_fact:
-    macos_softwareupdate_action: "--download"
-  when: not macos_softwareupdate.install
+    mas_macos_softwareupdate_action: "--download"
+  when: not mas_softwareupdate.install
   tags: mas
 
 - name: '[mas] Determine if softwareupdate should install recommended updates only'
   set_fact:
-    macos_softwareupdate_updates: "--recommended"
-  when: macos_softwareupdate.recommended
+    mas_macos_softwareupdate_updates: "--recommended"
+  when: mas_softwareupdate.recommended
   tags: mas
 
 - name: '[mas] Determine if softwareupdate should install all updates'
   set_fact:
-    macos_softwareupdate_updates: "--all"
-  when: not macos_softwareupdate.recommended
+    mas_macos_softwareupdate_updates: "--all"
+  when: not mas_softwareupdate.recommended
   tags: mas
 
 - name: '[mas] Run assembled command'
-  command: "{{ 'softwareupdate ' + macos_softwareupdate_action + ' ' + macos_softwareupdate_updates }}"
+  command: "{{ 'softwareupdate ' + mas_macos_softwareupdate_action + ' ' + mas_macos_softwareupdate_updates }}"
   register: softwareupdate_assembled
   changed_when:
   - softwareupdate_assembled.rc != 0
