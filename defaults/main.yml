@@ -1,12 +1,23 @@
 ---
-mas_email: ""
-mas_password: ""
-mas_installed_app_ids: [] # Deprecated
-mas_installed_apps:
-  - { id: 425264550, name: "Blackmagic Disk Speed Test (3.0)" }
-  - { id: 411643860, name: "DaisyDisk (4.3.2)" }
-  - { id: 498486288, name: "Quick Resizer (1.9)" }
-  - { id: 497799835, name: "Xcode (8.1)" }
+# defaults file for ansible-mas
 
-mas_upgrade_all_apps: false
-mas_signin_dialog: false
+mas_email: ""
+
+mas_password: ""
+
+
+mas_installed_apps:
+- { id: 883878097, name: "Server" }
+- { id: 497799835, name: "Xcode" }
+- { id: 747648890, name: "Telegram" }
+- { id: 1451685025, name: "Wireguard" }
+- { id: 1037126344, name: "Apple Configurator 2" }
+
+mas_upgrade_all_apps: no
+
+mas_signin_dialog: no
+
+mas_softwareupdate:
+  recommended: false
+  install: false
+...

@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   role_name: mas
-  author: geerlingguy
+  author: geerlingguy (Edited by drew-kun)
   description: Mac App Store CLI installation for macOS
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
@@ -22,3 +22,4 @@ galaxy_info:
     - app
     - store
     - macos
+...

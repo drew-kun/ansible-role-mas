@@ -1,63 +1,58 @@
-# Ansible Role: Mac App Store CLI (mas)
+Ansible role: macdock
+=========
 
-[![Build Status](https://travis-ci.com/geerlingguy/ansible-role-mas.svg?branch=master)](https://travis-ci.com/geerlingguy/ansible-role-mas)
+[![MIT licensed][mit-badge]][mit-link]
+[![Galaxy Role][role-badge]][galaxy-link]
 
-Installs [mas](https://github.com/mas-cli/mas) on macOS, and installs macOS apps from the Mac App Store.
+Ansible role for installing the apps from MacOS App Store.
+This role is a fork of geerlingguy.mas role, which does not work for me for some reason.
 
-## Requirements
+Requirements
+------------
 
-  - **Homebrew**: Requires `homebrew` already installed (you can use `geerlingguy.homebrew` to install it on your Mac).
-  - **Mac App Store account**: You can either sign into the Mac App Store via the GUI before running this role, or you can set the `mas_email` and `mas_password` prior to running the role. For security reasons, if you're going to use this role to sign in, you should use `vars_prompt` for at least the password; don't store unencrypted passwords with your playbooks!
+MacOS on the configured host.
 
-## Role Variables
+Role Variables
+--------------
 
-Available variables are listed below, along with default values (see `defaults/main.yml`):
+| Variable | Description | Default |
+|----------|-------------|---------|
+| **mas_email** | Email registered for AppStore purchases | `<empty>` |
+| **mas_password** | Password used buy mas for AppStore purchases | `<empty>` |
+| **mas_installed_apps[]** | List of apps to be installed | see [`defaults/main.yml`](defaults/main.yml) |
+| **mas_upgrade_all_apps** | Upgrade installed apps? | `no` |
+| **mas_signin_dialog** | Show sign in dialog? | `no` |
+| **mas_software_update.install** | Determine if softwareupdate should install or just download updates | `false` |
+| **mas_software_update.recommended** | Determine if softwareupdate should install all or recommended updates only | `false` |
 
-    mas_email: ""
-    mas_password: ""
+Dependencies
+------------
 
-The credentials for your Mac App Store account. The Apps you install should already be purchased by/registered to this account.
+None.
 
-If setting these variables statically (e.g. in an included vars file), you should encrypt the inventory using [Ansible Vault](http://docs.ansible.com/ansible/playbooks_vault.html). Otherwise you can use [`vars_prompt`](http://docs.ansible.com/ansible/playbooks_prompts.html) to prompt for the password at playbook runtime.
+Example Playbook
+----------------
 
-If you leave both blank, and don't prompt for them, the role assumes you've already signed in via other means (e.g. via GUI or `mas signin [email]`), and will not attempt to sign in again.
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    mas_signin_dialog: false
+```yaml
+- hosts: dev_clients
+  roles:
+  - role: drew-kun.mas
+```
 
-Fallback to the built-in Mac App Store dialog to complete sign in. If set to yes, you must specify the aforementioned `mas_email` variable which will be autofilled in the dialog and prompt you to enter your password, followed by the 2FA authorization code if enabled on the account.
+License
+-------
 
-    mas_installed_apps:
-      - { id: 425264550, name: "Blackmagic Disk Speed Test (3.0)" }
-      - { id: 411643860, name: "DaisyDisk (4.3.2)" }
-      - { id: 498486288, name: "Quick Resizer (1.9)" }
-      - { id: 497799835, name: "Xcode (8.1)" }
+[MIT][mit-link]
 
-A list of apps to ensure are installed on the computer. You can get IDs for all your existing installed apps with `mas list`, and you can search for IDs with `mas search [App Name]`. The `name` attribute is not authoritative and only used to provide better information in the playbook output.
+Author Information
+------------------
 
-    mas_upgrade_all_apps: false
+Andrew Shagayev | [e-mail](mailto:drewshg@gmail.com)
 
-Whether to run `mas upgrade`, which will upgrade all installed Mac App Store apps.
+[role-badge]: https://img.shields.io/badge/role-drew--kun.mas-green.svg
+[galaxy-link]: https://galaxy.ansible.com/drew-kun/mas/
 
-## Dependencies
-
-  - (Soft dependency) `geerlingguy.homebrew`
-
-## Example Playbook
-
-    - hosts: localhost
-      vars:
-        mas_installed_apps:
-          - { id: 497799835, name: "Xcode (8.1)" }
-      roles:
-        - geerlingguy.homebrew
-        - geerlingguy.mas
-
-See the [Mac Development Ansible Playbook](https://github.com/geerlingguy/mac-dev-playbook) for an example of this role's usage.
-
-## License
-
-MIT / BSD
-
-## Author Information
-
-This role was created in 2016 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+[mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[mit-link]: https://raw.githubusercontent.com/drew-kun/ansible-mas/master/LICENSE
