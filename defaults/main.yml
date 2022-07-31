@@ -12,9 +12,9 @@ mas_installed_apps:
 - { id: 1503420154, name: "Server Plus" }
 - { id: 1037126344, name: "Apple Configurator 2" }
 
-mas_upgrade_all_apps: no
+mas_upgrade_all_apps: false
 
-mas_signin_dialog: no
+mas_signin_dialog: false
 
 mas_softwareupdate:
   recommended: false

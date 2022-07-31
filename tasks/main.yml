@@ -8,18 +8,21 @@
   tags: mas
 
 - name: '[mas] Get MAS account status'
-  command: /usr/local/bin/mas account
+  command: /opt/homebrew/bin/mas account
   register: mas_account_result
   failed_when: mas_account_result.rc > 1
+  check_mode: false
   changed_when: false
+  when: ansible_distribution_version is version('12', '<')
   tags: mas
 
 # Unfortunately having this issue (Hope it will be fixed soon):
 # https://github.com/mas-cli/mas/issues/164
 - name: '[mas] Sign in to MAS when email and password are provided'
-  command: "/usr/local/bin/mas signin {{ mas_email }} {{ mas_password }}"
+  command: "/opt/homebrew/bin/mas signin {{ mas_email }} {{ mas_password }}"
   register: mas_signin_result
   when:
+  - ansible_distribution_version is version('10.13', '<')
   - not mas_signin_dialog
   - mas_account_result.rc == 1  # should be switched to 0 or make an OR statement
   - mas_email != ''
@@ -27,29 +30,37 @@
   tags: mas
 
 - name: '[mas] Sign in to MAS when email is provided, and complete password and 2FA using dialog.'
-  command: "/usr/local/bin/mas signin {{ mas_email }} {{ mas_password }} --dialog"
+  command: "/opt/homebrew/bin/mas signin {{ mas_email }} {{ mas_password }} --dialog"
   register: mas_signin_result
   when:
+  - ansible_distribution_version is version('10.13', '<')
   - mas_signin_dialog
   - mas_account_result.rc == 1  # should be switched to 0 or make an OR statement
   - mas_email != ''
   tags: mas
 
 - name: '[mas] List installed MAS apps'
-  command: /usr/local/bin/mas list
+  command: /opt/homebrew/bin/mas list
   register: mas_list
   check_mode: no
   changed_when: false
   tags: mas
 
 - name: '[mas] Ensure configured MAS apps are installed'
-  command: /usr/local/bin/mas install "{{ item.id|default(item) }}"
+  command: /opt/homebrew/bin/mas install "{{ item.id|default(item) }}"
   with_items: "{{ mas_installed_apps }}"
   when: (item.id | default(item) | string) not in mas_list.stdout
   tags: mas
 
+# community.general.mas module still cannot find the mas binary installed by brew
+#- name: Ensure configured MAS apps are installed.
+#  community.general.mas:
+#    id: "{{ item.id|default(item) }}"
+#    state: present
+#  with_items: "{{ mas_installed_apps }}"
+
 - name: '[mas] Upgrade all apps (if configured)'
-  command: /usr/local/bin/mas upgrade
+  command: /opt/homebrew/bin/mas upgrade
   when: mas_upgrade_all_apps
   tags: mas
 
@@ -85,4 +96,3 @@
   - softwareupdate_assembled.rc != 0
   - not 'No updates are available.' in softwareupdate_assembled.stderr
   tags: mas
-...
