@@ -7,8 +7,16 @@
   until: mas_istall_result is succeeded
   tags: mas
 
+- name: '[mas] Get correct brew prefix'
+  command: 'brew --prefix'
+  environment:
+    PATH: "/opt/homebrew/bin:/usr/local/bin:{{ ansible_env.PATH }}"
+  register: mas_brew_prefix
+  changed_when: false
+  tags: mas
+
 - name: '[mas] Get MAS account status'
-  command: /opt/homebrew/bin/mas account
+  command: "{{ mas_brew_prefix.stdout }}/bin/mas account"
   register: mas_account_result
   failed_when: mas_account_result.rc > 1
   check_mode: false
@@ -19,7 +27,7 @@
 # Unfortunately having this issue (Hope it will be fixed soon):
 # https://github.com/mas-cli/mas/issues/164
 - name: '[mas] Sign in to MAS when email and password are provided'
-  command: "/opt/homebrew/bin/mas signin {{ mas_email }} {{ mas_password }}"
+  command: "{{ mas_brew_prefix.stdout }}/bin/mas signin {{ mas_email }} {{ mas_password }}"
   register: mas_signin_result
   when:
   - ansible_distribution_version is version('10.13', '<')
@@ -30,7 +38,7 @@
   tags: mas
 
 - name: '[mas] Sign in to MAS when email is provided, and complete password and 2FA using dialog.'
-  command: "/opt/homebrew/bin/mas signin {{ mas_email }} {{ mas_password }} --dialog"
+  command: "{{ mas_brew_prefix.stdout }}/bin/mas signin {{ mas_email }} {{ mas_password }} --dialog"
   register: mas_signin_result
   when:
   - ansible_distribution_version is version('10.13', '<')
@@ -40,14 +48,14 @@
   tags: mas
 
 - name: '[mas] List installed MAS apps'
-  command: /opt/homebrew/bin/mas list
+  command: "{{ mas_brew_prefix.stdout }}/bin/mas list"
   register: mas_list
   check_mode: no
   changed_when: false
   tags: mas
 
 - name: '[mas] Ensure configured MAS apps are installed'
-  command: /opt/homebrew/bin/mas install "{{ item.id|default(item) }}"
+  command: "{{ mas_brew_prefix.stdout }}/bin/mas install {{ item.id|default(item) }}"
   with_items: "{{ mas_installed_apps }}"
   when: (item.id | default(item) | string) not in mas_list.stdout
   tags: mas
@@ -60,7 +68,7 @@
 #  with_items: "{{ mas_installed_apps }}"
 
 - name: '[mas] Upgrade all apps (if configured)'
-  command: /opt/homebrew/bin/mas upgrade
+  command: "{{ mas_brew_prefix.stdout }}/bin/mas upgrade"
   when: mas_upgrade_all_apps
   tags: mas
 
