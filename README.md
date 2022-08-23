@@ -39,7 +39,7 @@ Including an example of how to use your role (for instance, with variables passe
 ```yaml
 - hosts: dev_clients
   roles:
-  - role: drew-kun.mas
+  - role: drew1kun.mas
 ```
 
 License
@@ -53,7 +53,7 @@ Author Information
 Andrew Shagayev | [e-mail](mailto:drewshg@gmail.com)
 
 [role-badge]: https://img.shields.io/badge/role-drew--kun.mas-green.svg
-[galaxy-link]: https://galaxy.ansible.com/drew-kun/mas/
+[galaxy-link]: https://galaxy.ansible.com/drew1kun/mas/
 
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[mit-link]: https://raw.githubusercontent.com/drew-kun/ansible-mas/master/LICENSE
+[mit-link]: https://raw.githubusercontent.com/drew1kun/ansible-mas/master/LICENSE
