@@ -1,6 +1,4 @@
 ---
-dependencies: []
-
 galaxy_info:
   role_name: mas
   author: geerlingguy (Edited by drew1kun)
@@ -22,3 +20,5 @@ galaxy_info:
     - app
     - store
     - macos
+    - osx
+    - workstation
