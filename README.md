@@ -3,6 +3,15 @@
 [![MIT licensed][mit-badge]][mit-link]
 [![Galaxy Role][role-badge]][galaxy-link]
 
+DEPRECATION NOTICE
+----
+This role is being deprecated in favor of [ansible-collection-mac][mac-github-link].
+
+Collection on Galaxy: [drew1kun.mac][mac-galaxy-link]
+
+Description
+----
+
 Ansible role for installing the apps from MacOS App Store.
 
 This role is a fork of geerlingguy.mas role, which does not work for me for some reason.
@@ -55,3 +64,5 @@ Andrew Shagayev | [e-mail](mailto:drewshg@gmail.com)
 [galaxy-link]: https://galaxy.ansible.com/drew1kun/mas/
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [mit-link]: https://raw.githubusercontent.com/drew1kun/ansible-mas/master/LICENSE
+[mac-github-link]: https://github.com/drew1kun/ansible-collection-mac
+[mac-galaxy-link]: https://galaxy.ansible.com/drew1kun/mac
